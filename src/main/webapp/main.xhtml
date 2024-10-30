@@ -7,92 +7,106 @@
 
 <h:head>
     <title>ЛР №3</title>
-    <meta charset="UTF-8" />
-    <link rel="stylesheet" href="css/main.css" type="text/css" />
+    <meta charset="UTF-8"/>
+    <link rel="stylesheet" href="css/main.css" type="text/css"/>
+    <script src="js/main.js" type="text/javascript" defer="defer"></script>
+
 
 </h:head>
 
 <h:body>
-    <h:form>
-        <header>Долинный Михаил Владимирович, P3232, 99438</header>
-<!--        <audio id="intro_audio" src="audio/site-intro.mp3" autoplay="true"></audio>-->
+    <header>Долинный Михаил Владимирович, P3232, 99438</header>
+    <!--        <audio id="intro_audio" src="audio/site-intro.mp3" autoplay="true"></audio>-->
 
-        <table>
-            <tr>
-                <!-- SVG graphics for the coordinate system -->
-                <td id="coordinate-plate">
-                    <svg width="500" height="500" xmlns="http://www.w3.org/2000/svg" id="plate">
-                        <!-- X and Y axes -->
-                        <line id="axis-x" x1="50" y1="250" x2="450" y2="250" stroke="silver" stroke-width="2"></line>
-                        <line id="axis-y" x1="250" y1="50" x2="250" y2="450" stroke="silver" stroke-width="2"></line>
+    <table>
+        <tr>
+            <!-- SVG graphics for the coordinate system -->
+            <td id="coordinate-plate">
+                <svg width="500" height="500" xmlns="http://www.w3.org/2000/svg" id="plate">
+                    <!-- X and Y axes -->
+                    <line id="axis-x" x1="50" y1="250" x2="450" y2="250" stroke="silver" stroke-width="2"/>
+                    <line id="axis-y" x1="250" y1="50" x2="250" y2="450" stroke="silver" stroke-width="2"/>
 
-                        <!-- Arrows and shapes -->
-                        <polygon id="arrow-x" points="450,245 450,255 460,250" fill="silver"></polygon>
-                        <polygon id="arrow-y" points="245,50 255,50 250,40" fill="silver"></polygon>
-                        <rect id="rect" x="200" y="251" width="49" height="99" fill="white"></rect>
-                        <path id="arc" d="M 350 251 A 75 100 400 0 1 251 350 L 251 251 Z" fill="white"></path>
-                        <polygon id="triangle" points="251,249 251,200 350,249" fill="white"></polygon>
+                    <!-- Arrows and shapes -->
+                    <polygon id="arrow-x" points="450,245 450,255 460,250" fill="silver"/>
+                    <polygon id="arrow-y" points="245,50 255,50 250,40" fill="silver"/>
+                    <rect id="rect" x="200" y="251" width="49" height="99" fill="white"/>
+                    <path id="arc" d="M 350 251 A 75 100 400 0 1 251 350 L 251 251 Z" fill="white"/>
+                    <polygon id="triangle" points="251,249 251,200 350,249" fill="white"/>
 
-                        <!-- Axis labels and radius markers -->
-                        <text x="260" y="50" id="text-y" fill="white">Y</text>
-                        <text x="450" y="240" id="text-x" fill="white">X</text>
+                    <!-- Axis labels and radius markers -->
+                    <text x="260" y="50" id="text-y" fill="white">Y</text>
+                    <text x="450" y="240" id="text-x" fill="white">X</text>
 
-<!--                        &lt;!&ndash; Rendering points based on resultList from the managed bean &ndash;&gt;-->
-<!--                        <ui:repeat value="#{resultBean.resultList}" var="result">-->
-<!--                            <circle cx="#{250 + 20 * result.x}" cy="#{250 - 20 * result.y}" r="2"-->
-<!--                                    fill="#{result.result ? 'green' : 'red'}" visibility="visible"></circle>-->
-<!--                        </ui:repeat>-->
-                    </svg>
-                </td>
+                    <!--Метки радиуса-->
+                    <line id="mark-neg-rx" x1="150" y1="245" x2="150" y2="255" stroke="silver"
+                          stroke-width="2"/>
+                    <line id="mark-rx" x1="350" y1="245" x2="350" y2="255" stroke="silver" stroke-width="2"/>
+                    <line id="mark-ry" x1="245" y1="150" x2="255" y2="150" stroke="silver" stroke-width="2"/>
+                    <line id="mark-neg-ry" x1="245" y1="350" x2="255" y2="350" stroke="silver"
+                          stroke-width="2"/>
 
-                <!-- Input Form -->
-                <td id="input">
-                    <h:panelGroup id="error" rendered="#{not empty resultBean.errorMessage}">
-                        <h:outputText value="#{resultBean.errorMessage}" styleClass="error" />
-                    </h:panelGroup>
+                    <text x="130" y="245" id="label-neg-rx" class="small" fill="white">-R</text>
+                    <text x="353" y="245" id="label-rx" class="small" fill="white">R</text>
+                    <text x="260" y="360" id="label-neg-ry" class="small" fill="white">-R</text>
+                    <text x="260" y="154" id="label-ry" class="small" fill="white">R</text>
 
-                    <h:form id="data-form">
-                        <!-- X Input -->
-                        <h:panelGrid columns="1" id="legend-x">
-                            <h:outputLabel for="x" value="Введите X (от -3 до 3):" />
-                            <h:inputText id="x" value="#{resultBean.x}" required="true" />
-                        </h:panelGrid>
+                </svg>
+            </td>
 
-                        <!-- Y Selection -->
-                        <h:panelGrid columns="1" id="legend-y">
-                            <h:outputLabel for="y" value="Выберите Y:" />
-                            <h:selectOneMenu id="y" value="#{resultBean.y}" required="true">
-                                <f:selectItem itemValue="-4" itemLabel="-4" />
-                                <f:selectItem itemValue="-3" itemLabel="-3" />
-                                <f:selectItem itemValue="-2" itemLabel="-2" />
-                                <f:selectItem itemValue="-1" itemLabel="-1" />
-                                <f:selectItem itemValue="0" itemLabel="0" />
-                                <f:selectItem itemValue="1" itemLabel="1" />
-                                <f:selectItem itemValue="2" itemLabel="2" />
-                                <f:selectItem itemValue="3" itemLabel="3" />
-                                <f:selectItem itemValue="4" itemLabel="4" />
-                            </h:selectOneMenu>
-                        </h:panelGrid>
+            <!-- Input Form -->
+            <td id="input">
+                <div id="error" hidden="hidden"></div>
 
-                        <!-- Radius Selection -->
-                        <h:panelGrid columns="1" id="legend-r">
-                            <h:outputLabel value="Выберите радиус R:" />
-                            <h:selectOneRadio value="#{resultBean.r}" required="true">
-                                <f:selectItem itemValue="1" itemLabel="1" />
-                                <f:selectItem itemValue="2" itemLabel="2" />
-                                <f:selectItem itemValue="3" itemLabel="3" />
-                                <f:selectItem itemValue="4" itemLabel="4" />
-                                <f:selectItem itemValue="5" itemLabel="5" />
-                            </h:selectOneRadio>
-                        </h:panelGrid>
+                <h:form id="data-form">
+                    <!-- X Input -->
+                    <h:panelGrid columns="1" id="legend-x">
+                        <h:outputLabel value="Изменение X:"/>
+                        <h:selectOneRadio id="x" value="#{formBean.x}" required="true">
+                            <f:selectItem itemValue="-2" itemLabel="-2"/>
+                            <f:selectItem itemValue="-1.5" itemLabel="-1.5"/>
+                            <f:selectItem itemValue="-1" itemLabel="-1"/>
+                            <f:selectItem itemValue="-0.5" itemLabel="-0.5"/>
+                            <f:selectItem itemValue="0" itemLabel="0"/>
+                            <f:selectItem itemValue="0.5" itemLabel="0.5"/>
+                            <f:selectItem itemValue="1" itemLabel="1"/>
+                            <f:selectItem itemValue="1.5" itemLabel="1.5"/>
+                            <f:selectItem itemValue="2" itemLabel="2"/>
+                        </h:selectOneRadio>
+                    </h:panelGrid>
 
-                        <!-- Submit Button -->
-                        <h:commandButton id="submit" value="Проверить" action="#{resultBean.checkPoint}" />
-                    </h:form>
-                </td>
+                    <!-- Y Input -->
+                    <h:panelGrid columns="1" id="legend-y">
+                        <h:outputLabel for="y" value="Введите Y (от -3 до 5):"/>
+                        <h:inputText id="y" value="#{formBean.y}" required="true">
+                            <f:validateDoubleRange minimum="-3" maximum="5"/>
+                        </h:inputText>
+                    </h:panelGrid>
 
-                <!-- Result Table -->
-                <td id="result">
+
+                    <h:panelGrid columns="1" id="legend-r">
+                        <h:outputLabel value="Выберите радиус R:"/>
+                        <h:selectOneRadio id="rSelect" value="#{formBean.r}" required="true">
+                            <f:selectItem itemValue="1" itemLabel="1"/>
+                            <f:selectItem itemValue="1.5" itemLabel="1.5"/>
+                            <f:selectItem itemValue="2" itemLabel="2"/>
+                            <f:selectItem itemValue="2.5" itemLabel="2.5"/>
+                            <f:selectItem itemValue="3" itemLabel="3"/>
+                        </h:selectOneRadio>
+                    </h:panelGrid>
+
+
+                    <h:commandButton id="submit" value="Проверить"  action="#{formBean.checkPoint()}"  onclick="return validateAndSubmitForm();">
+                        <f:ajax execute="@form" render="result-form" oncomplete="ajaxCallback"/>
+                    </h:commandButton>
+
+                </h:form>
+
+            </td>
+
+            <!-- Result Table -->
+            <td id="result">
+                <h:form id="result-form">
                     <table id="result-table">
                         <tr>
                             <th>X</th>
@@ -102,24 +116,28 @@
                             <th>Now</th>
                             <th>Result</th>
                         </tr>
-                        <ui:repeat value="#{resultBean.resultList}" var="result">
+                        <ui:repeat value="#{resultBean.getResultList()}" var="result">
                             <tr>
-                                <td><h:outputText value="#{result.x}" /></td>
-                                <td><h:outputText value="#{result.y}" /></td>
-                                <td><h:outputText value="#{result.r}" /></td>
-                                <td><h:outputText value="#{result.completeTime} нс" /></td>
-                                <td><h:outputText value="#{result.time}" /></td>
-                                <td><h:outputText value="#{result.result}" /></td>
+                                <td><h:outputText value="#{result.x}"/></td>
+                                <td><h:outputText value="#{result.y}"/></td>
+                                <td><h:outputText value="#{result.r}"/></td>
+                                <td><h:outputText value="#{result.completeTime} нс"/></td>
+                                <td><h:outputText value="#{result.time}"/></td>
+                                <td><h:outputText value="#{result.result}"/></td>
                             </tr>
                         </ui:repeat>
                     </table>
-                </td>
-            </tr>
-        </table>
-    </h:form>
+                </h:form>
+
+            </td>
+        </tr>
+    </table>
+
 
     <h:form>
         <h:commandButton value="Начальная страница" action="index"/>
     </h:form>
+
+
 </h:body>
 </html>

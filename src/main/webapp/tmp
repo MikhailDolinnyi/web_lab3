@@ -1,0 +1,18 @@
+<!--                        <ui:repeat value="#{formBean.resultList}" var="result">-->
+<!--                            <tr>-->
+<!--                                <td><h:outputText value="#{result.x}" /></td>-->
+<!--                                <td><h:outputText value="#{result.y}" /></td>-->
+<!--                                <td><h:outputText value="#{result.r}" /></td>-->
+<!--                                <td><h:outputText value="#{result.completeTime} нс" /></td>-->
+<!--                                <td><h:outputText value="#{result.time}" /></td>-->
+<!--                                <td><h:outputText value="#{result.result}" /></td>-->
+<!--                            </tr>-->
+<!--                        </ui:repeat>-->
+
+
+
+<!--                        &lt;!&ndash; Rendering points based on resultList from the managed bean &ndash;&gt;-->
+<!--                        <ui:repeat value="#{formBean.resultList}" var="result">-->
+<!--                            <circle cx="#{250 + 20 * result.x}" cy="#{250 - 20 * result.y}" r="2"-->
+<!--                                    fill="#{result.result ? 'green' : 'red'}" visibility="visible"></circle>-->
+<!--                        </ui:repeat>-->
