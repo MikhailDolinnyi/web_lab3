@@ -20,6 +20,7 @@
 
     <table>
         <tr>
+            <h:form id="plate-with-dots">
             <!-- SVG graphics for the coordinate system -->
             <td id="coordinate-plate">
                 <svg width="500" height="500" xmlns="http://www.w3.org/2000/svg" id="plate">
@@ -51,8 +52,18 @@
                     <text x="260" y="360" id="label-neg-ry" class="small" fill="white">-R</text>
                     <text x="260" y="154" id="label-ry" class="small" fill="white">R</text>
 
+
                 </svg>
+                <div id="points-data" style="display: none;">
+                    <ui:repeat value="#{formBean.getResultList()}" var="result">
+                        <span class="point" data-x="#{result.x}" data-y="#{result.y}" data-result="#{result.result}"></span>
+                    </ui:repeat>
+                </div>
+
+
+
             </td>
+            </h:form>
 
             <!-- Input Form -->
             <td id="input">
@@ -96,7 +107,7 @@
                     </h:panelGrid>
 
 
-                    <h:commandButton id="submit" value="Проверить"  action="#{formBean.checkPoint()}"  onclick="return validateAndSubmitForm();">
+                    <h:commandButton id="submit" value="Проверить" action="#{formBean.checkPointAndSaveAtDB()}" onclick="return validateAndSubmitForm();">
                         <f:ajax execute="@form" render="result-form" oncomplete="ajaxCallback"/>
                     </h:commandButton>
 
@@ -116,18 +127,20 @@
                             <th>Now</th>
                             <th>Result</th>
                         </tr>
-                        <ui:repeat value="#{resultBean.getResultList()}" var="result">
+                        <ui:repeat value="#{formBean.getResultList()}" var="result">
                             <tr>
                                 <td><h:outputText value="#{result.x}"/></td>
                                 <td><h:outputText value="#{result.y}"/></td>
                                 <td><h:outputText value="#{result.r}"/></td>
-                                <td><h:outputText value="#{result.completeTime} нс"/></td>
-                                <td><h:outputText value="#{result.time}"/></td>
+                                <td><h:outputText value="#{result.executionTime} нс"/></td>
+                                <td><h:outputText value="#{result.nowTime}"/></td>
                                 <td><h:outputText value="#{result.result}"/></td>
                             </tr>
                         </ui:repeat>
                     </table>
                 </h:form>
+
+
 
             </td>
         </tr>

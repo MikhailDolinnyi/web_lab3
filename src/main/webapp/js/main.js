@@ -80,7 +80,7 @@ document.addEventListener("DOMContentLoaded", function () {
         y = Math.round(y);
 
         try {
-            validateFormInput({ x: x.toFixed(2), y: y, r: r });
+            validateFormInput({x: x.toFixed(2), y: y, r: r});
 
             // Устанавливаем значения в форме
             document.querySelector('input[name="data-form:x"]').value = x.toFixed(2);
@@ -93,7 +93,6 @@ document.addEventListener("DOMContentLoaded", function () {
             alert(e.message);
         }
     }
-
 
     let allowAjaxRequest = false;
 
@@ -121,12 +120,15 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     }
 
-
     window.ajaxCallback = function (data) {
         if (!allowAjaxRequest && data.status === 'begin') {
             data.cancel(); // Отмена выполнения запроса, если валидация не прошла
+        } else if (data.status === 'success') {
+            drawPoints(); // Добавляем вызов drawPoints после успешного выполнения запроса
         }
-    }
+    };
+
+
 
     // Привязываем обработчик события для клика по SVG
     document.getElementById("plate").addEventListener("click", handleClick);
@@ -175,4 +177,45 @@ document.addEventListener("DOMContentLoaded", function () {
         document.getElementById("label-neg-ry").setAttribute("y", 250 + 110 * scaleFactor);
         document.getElementById("label-ry").setAttribute("y", 250 - 95 * scaleFactor);
     }
+
+
+
+
+    window.drawPoints = function (){
+        const svg = document.getElementById("plate");
+        // Очищаем старые точки перед отрисовкой новых
+        svg.querySelectorAll(".data-point").forEach(point => point.remove());
+
+        // Находим все точки в #points-data
+        const points = document.querySelectorAll("#points-data .point");
+
+        points.forEach(point => {
+            // Извлекаем данные из атрибутов
+            const x = parseFloat(point.getAttribute("data-x"));
+            const y = parseFloat(point.getAttribute("data-y"));
+            const result = point.getAttribute("data-result") === "true";
+
+            // Преобразуем координаты для SVG-системы (центр 250,250 и масштаб)
+            const svgX = 250 + x * 20; // Пример масштабирования, если 1 единица = 50 пикселей
+            const svgY = 250 - y * 20;
+
+            // Создаем круг для точки
+            const circle = document.createElementNS("http://www.w3.org/2000/svg", "circle");
+            circle.setAttribute("cx", svgX);
+            circle.setAttribute("cy", svgY);
+            circle.setAttribute("r", 2);
+            circle.setAttribute("fill", result ? "green" : "red");
+            circle.classList.add("data-point");
+
+            // Добавляем точку на svg
+            svg.appendChild(circle);
+        });
+    }
+
+
+
+    // Вызываем функцию отрисовки точек при загрузке
+    drawPoints();
+
+
 });

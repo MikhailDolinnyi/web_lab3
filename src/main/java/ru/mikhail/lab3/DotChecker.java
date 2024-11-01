@@ -3,7 +3,7 @@ package ru.mikhail.lab3;
 public class DotChecker {
 
 
-    static boolean checkDot(float x, float y, float r) {
+    public static boolean checkDot(float x, float y, float r) {
 
         return checkFirstQuarter(x, y, r) || checkSecondQuarter() ||
                 checkThirdQuarter(x, y, r) || checkFourthQuarter(x, y, r);
