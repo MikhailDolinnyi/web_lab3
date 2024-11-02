@@ -5,7 +5,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
         let date = new Date();
 
-        let data = date.getDate();
+        let data  = date.getDate() < 10 ? '0' + date.getDate() : date.getDate();
 
         let month = date.getMonth() < 10 ? '0' + date.getMonth() : date.getMonth();
 

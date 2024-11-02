@@ -1,5 +1,7 @@
 // Оборачиваем код в обработчик события DOMContentLoaded, чтобы убедиться, что элементы DOM загружены
 document.addEventListener("DOMContentLoaded", function () {
+
+
     // Классы валидации и функции валидации
     class InvalidValueException extends Error {
         constructor(message) {
@@ -120,15 +122,6 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     }
 
-    window.ajaxCallback = function (data) {
-        if (!allowAjaxRequest && data.status === 'begin') {
-            data.cancel(); // Отмена выполнения запроса, если валидация не прошла
-        } else if (data.status === 'success') {
-            drawPoints(); // Добавляем вызов drawPoints после успешного выполнения запроса
-        }
-    };
-
-
 
     // Привязываем обработчик события для клика по SVG
     document.getElementById("plate").addEventListener("click", handleClick);
@@ -179,9 +172,8 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
 
-
-
-    window.drawPoints = function (){
+    function drawPoints() {
+        console.log("drawPoints called");
         const svg = document.getElementById("plate");
         // Очищаем старые точки перед отрисовкой новых
         svg.querySelectorAll(".data-point").forEach(point => point.remove());
@@ -196,7 +188,7 @@ document.addEventListener("DOMContentLoaded", function () {
             const result = point.getAttribute("data-result") === "true";
 
             // Преобразуем координаты для SVG-системы (центр 250,250 и масштаб)
-            const svgX = 250 + x * 20; // Пример масштабирования, если 1 единица = 50 пикселей
+            const svgX = 250 + x * 20; // Пример масштабирования, если 1 единица = 20 пикселей
             const svgY = 250 - y * 20;
 
             // Создаем круг для точки
@@ -213,9 +205,23 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
 
+    // MutationObserver для отслеживания изменений в <td id="result">
+    const resultElement = document.getElementById("result");
+    if (resultElement) {
+        const observer = new MutationObserver(function () {
+            drawPoints();
+        });
 
-    // Вызываем функцию отрисовки точек при загрузке
-    drawPoints();
+        observer.observe(resultElement, {
+            childList: true,
+            subtree: true
+        });
+    }
+
+    drawPoints(); // Изначальная отрисовка точек
+
+
+
 
 
 });
