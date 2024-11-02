@@ -13,7 +13,7 @@ public class DotChecker {
     static boolean checkFirstQuarter(float x, float y, float r) {
         if (x > 0 && y > 0) {
             // Треугольник: y <= -x + R/2
-            return (y <= ((float) r / 2) - x / 2);
+            return (y <= (r / 2) - x / 2);
 
         }
         return false;
@@ -30,7 +30,7 @@ public class DotChecker {
         // Третья четверть (прямоугольник)
         if (x <= 0 && y <= 0) {
             // Прямоугольник: x >= -R/2 и y >= -R
-            return (x >= ((float) -r / 2) && y >= -r);
+            return (x >= (-r / 2) && y >= -r);
         }
         return false;
     }

@@ -16,10 +16,10 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     }
 
-    class XValidator extends Validator {
+    class YValidator extends Validator {
         validate(value) {
             if (isNaN(value)) {
-                throw new InvalidValueException("Неверное значение X");
+                throw new InvalidValueException("Неверное значение Y");
             }
 
             const decimalPart = String(value).trim().split('.')[1];
@@ -27,24 +27,24 @@ document.addEventListener("DOMContentLoaded", function () {
                 throw new InvalidValueException("Слишком много знаков после запятой");
             }
 
-            const x = Number(value);
-            if (x < -3 || x > 3) {
-                throw new InvalidValueException("Число X не входит в диапазон");
+            const y = Number(value);
+            if (y < -4 || y > 4) {
+                throw new InvalidValueException("Число Y не входит в диапазон");
             }
 
             return true;
         }
     }
 
-    class YValidator extends Validator {
+    class XValidator extends Validator {
         validate(value) {
             if (isNaN(value)) {
-                throw new InvalidValueException("Неверное значение Y");
+                throw new InvalidValueException("Неверное значение X");
             }
 
-            const y = Number(value);
-            if (y < -4 || y > 4) {
-                throw new InvalidValueException("Число Y не входит в диапазон");
+            const x = Number(value);
+            if (x < -3 || x > 3) {
+                throw new InvalidValueException("Число X не входит в диапазон");
             }
             return true;
         }
@@ -79,18 +79,18 @@ document.addEventListener("DOMContentLoaded", function () {
         const r = document.querySelector('input[name="data-form\:rSelect"]:checked')?.value;
         const x = (coords.x - 250) / 20;
         let y = (250 - coords.y) / 20;
-        y = Math.round(y);
 
         try {
-            validateFormInput({x: x.toFixed(2), y: y, r: r});
+            validateFormInput({x: x.toFixed(2), y: y.toFixed(2), r: r});
 
             // Устанавливаем значения в форме
             document.querySelector('input[name="data-form:x"]').value = x.toFixed(2);
-            document.querySelector('input[name="data-form:y"]').value = y;
+            document.querySelector('input[name="data-form:y"]').value = y.toFixed(2);
             document.querySelector('input[name="data-form:rSelect"][value="' + r + '"]').checked = true;
 
             // Отправляем форму через стандартное JSF-событие
-            validateAndSubmitForm();
+            // validateAndSubmitForm();
+            document.getElementById("data-form:submit").click();
         } catch (e) {
             alert(e.message);
         }
@@ -188,7 +188,7 @@ document.addEventListener("DOMContentLoaded", function () {
             const result = point.getAttribute("data-result") === "true";
 
             // Преобразуем координаты для SVG-системы (центр 250,250 и масштаб)
-            const svgX = 250 + x * 20; // Пример масштабирования, если 1 единица = 20 пикселей
+            const svgX = 250 + x * 20;
             const svgY = 250 - y * 20;
 
             // Создаем круг для точки
@@ -219,9 +219,6 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
     drawPoints(); // Изначальная отрисовка точек
-
-
-
 
 
 });

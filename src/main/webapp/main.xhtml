@@ -22,7 +22,6 @@
         <tr>
 
 
-            <!-- SVG graphics for the coordinate system -->
             <td id="coordinate-plate">
                 <h:form id="plate-with-dots">
                     <div id="points-data" style="visibility: hidden">
@@ -71,24 +70,12 @@
                 <h:form id="data-form">
                     <!-- X Input -->
                     <h:panelGrid columns="1" id="legend-x">
-                        <h:panelGroup>
-                            <h:outputLabel for="x" value="Изменение X:"/>
-                            <h:selectOneRadio id="x" value="#{formBean.x}" required="true">
-                                <f:selectItem itemValue="-3" itemLabel="-3"/>
-                                <f:selectItem itemValue="-2.5" itemLabel="-2.5"/>
-                                <f:selectItem itemValue="-2" itemLabel="-2"/>
-                                <f:selectItem itemValue="-1.5" itemLabel="-1.5"/>
-                                <f:selectItem itemValue="-1" itemLabel="-1"/>
-                                <f:selectItem itemValue="-0.5" itemLabel="-0.5"/>
-                                <f:selectItem itemValue="0" itemLabel="0"/>
-                                <f:selectItem itemValue="0.5" itemLabel="0.5"/>
-                                <f:selectItem itemValue="1" itemLabel="1"/>
-                                <f:selectItem itemValue="1.5" itemLabel="1.5"/>
-                                <f:selectItem itemValue="2" itemLabel="2"/>
-                                <f:selectItem itemValue="2.5" itemLabel="2.5"/>
-                                <f:selectItem itemValue="3" itemLabel="3"/>
-                            </h:selectOneRadio>
-                        </h:panelGroup>
+
+                        <h:outputLabel for="x" value="Введите X (от -3 до 3):"/>
+                        <h:inputText id="x" value="#{formBean.x}" required="true">
+                            <f:validateDoubleRange minimum="-3" maximum="3"/>
+                        </h:inputText>
+
                     </h:panelGrid>
 
                     <!-- Y Input -->
