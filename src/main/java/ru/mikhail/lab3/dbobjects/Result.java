@@ -6,7 +6,7 @@ import jakarta.persistence.*;
 import java.sql.Timestamp;
 
 @Entity
-@Table(name="results")
+@Table(name = "results")
 public class Result {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -21,16 +21,16 @@ public class Result {
 
     @Column(name = "execution_time")
     private long executionTime;
-    @Column (name="now_time")
+    @Column(name = "now_time")
     private Timestamp nowTime;
 
-    public Result(float x, float y,float r, boolean result, long executionTime, Timestamp nowTime){
-        this.x=x;
-        this.y=y;
-        this.r=r;
-        this.result=result;
-        this.executionTime=executionTime;
-        this.nowTime=nowTime;
+    public Result(float x, float y, float r, boolean result, long executionTime, Timestamp nowTime) {
+        this.x = x;
+        this.y = y;
+        this.r = r;
+        this.result = result;
+        this.executionTime = executionTime;
+        this.nowTime = nowTime;
     }
 
     public Result() {
@@ -40,7 +40,6 @@ public class Result {
     public int getId() {
         return id;
     }
-
 
 
     public float getX() {

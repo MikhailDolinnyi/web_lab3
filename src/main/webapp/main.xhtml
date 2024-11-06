@@ -105,7 +105,7 @@
                     </h:panelGrid>
 
 
-                    <h:commandButton id="submit" value="Проверить" action="#{formBean.checkPointAndSaveAtDB()}"
+                    <h:commandButton id="submit" value="Проверить" action="#{dotCheckerBean.checkPointAndSaveAtDB()}"
                                      onclick="return validateAndSubmitForm();">
                         <f:ajax execute="@form" render="result-form plate-with-dots"/>
                     </h:commandButton>

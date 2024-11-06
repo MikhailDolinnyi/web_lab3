@@ -6,10 +6,10 @@ import org.hibernate.cfg.Configuration;
 import ru.mikhail.lab3.dbobjects.Result;
 
 
-public class HibernateSessionFactoryUtil {
+public class HibernateSessionFactory {
     private static SessionFactory sessionFactory;
 
-    private HibernateSessionFactoryUtil() {
+    private HibernateSessionFactory() {
     }
 
     public static SessionFactory getSessionFactory() {

@@ -9,14 +9,14 @@ import java.util.List;
 public class ResultDAOImpl implements ResultDAO {
     @Override
     public Result findById(int id) {
-        try (Session session = HibernateSessionFactoryUtil.getSessionFactory().openSession()) {
+        try (Session session = HibernateSessionFactory.getSessionFactory().openSession()) {
             return session.get(Result.class, id);
         }
     }
 
     @Override
     public void save(Result result) {
-        Session session = HibernateSessionFactoryUtil.getSessionFactory().openSession();
+        Session session = HibernateSessionFactory.getSessionFactory().openSession();
         Transaction tx = session.beginTransaction();
         session.persist(result);
         tx.commit();
@@ -25,7 +25,7 @@ public class ResultDAOImpl implements ResultDAO {
 
     @Override
     public void update(Result result) {
-        Session session = HibernateSessionFactoryUtil.getSessionFactory().openSession();
+        Session session = HibernateSessionFactory.getSessionFactory().openSession();
         Transaction tx = session.beginTransaction();
         session.merge(result);
         tx.commit();
@@ -34,7 +34,7 @@ public class ResultDAOImpl implements ResultDAO {
 
     @Override
     public void delete(Result result) {
-        Session session = HibernateSessionFactoryUtil.getSessionFactory().openSession();
+        Session session = HibernateSessionFactory.getSessionFactory().openSession();
         Transaction tx = session.beginTransaction();
         session.remove(result);
         tx.commit();
@@ -43,7 +43,7 @@ public class ResultDAOImpl implements ResultDAO {
 
     @Override
     public List<Result> findAll() {
-        try (Session session = HibernateSessionFactoryUtil.getSessionFactory().openSession()) {
+        try (Session session = HibernateSessionFactory.getSessionFactory().openSession()) {
             return  (List<Result>) session.createQuery("from Result").list();
         }
     }
