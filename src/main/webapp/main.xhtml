@@ -25,7 +25,7 @@
             <td id="coordinate-plate">
                 <h:form id="plate-with-dots">
                     <div id="points-data" style="visibility: hidden">
-                        <ui:repeat value="#{formBean.getResultList()}" var="dot">
+                        <ui:repeat value="#{controllerBean.getResultList()}" var="dot">
                                                 <span class="point" data-x="#{dot.x}" data-y="#{dot.y}"
                                                       data-result="#{dot.result}"/>
                         </ui:repeat>
@@ -40,9 +40,15 @@
                     <!-- Other elements for SVG (arrows, shapes, labels) -->
                     <polygon id="arrow-x" points="450,245 450,255 460,250" fill="silver"/>
                     <polygon id="arrow-y" points="245,50 255,50 250,40" fill="silver"/>
-                    <rect id="rect" x="200" y="251" width="49" height="99" fill="white"/>
+
+                    <!-- Квадрат-->
+                    <rect id="rect" x="150" y="251" width="99" height="100" fill="white"/>
+
+                    <!-- 4 четверть полукруг-->
                     <path id="arc" d="M 350 251 A 75 100 400 0 1 251 350 L 251 251 Z" fill="white"/>
-                    <polygon id="triangle" points="251,249 251,200 350,249" fill="white"/>
+
+                    <!-- Треугольник-->
+                    <polygon id="triangle" points="251,249 251,200 300,249" fill="white"/>
 
                     <!-- Axis labels and markers -->
                     <text x="260" y="50" id="text-y" fill="white">Y</text>
@@ -72,7 +78,7 @@
                     <h:panelGrid columns="1" id="legend-x">
 
                         <h:outputLabel for="x" value="Введите X (от -3 до 3):"/>
-                        <h:inputText id="x" value="#{formBean.x}" required="true">
+                        <h:inputText id="x" value="#{controllerBean.x}" required="true">
                             <f:validateDoubleRange minimum="-3" maximum="3"/>
                         </h:inputText>
 
@@ -81,7 +87,7 @@
                     <!-- Y Input -->
                     <h:panelGrid columns="1" id="legend-y">
                         <h:outputLabel for="y" value="Введите Y (от -4 до 4):"/>
-                        <h:inputText id="y" value="#{formBean.y}" required="true">
+                        <h:inputText id="y" value="#{controllerBean.y}" required="true">
                             <f:validateDoubleRange minimum="-4" maximum="4"/>
                         </h:inputText>
                     </h:panelGrid>
@@ -90,7 +96,7 @@
                     <h:panelGrid columns="1" id="legend-r">
                         <h:panelGroup>
                             <h:outputLabel for="rSelect" value="Выберите радиус R:"/>
-                            <h:selectOneRadio id="rSelect" value="#{formBean.r}" required="true">
+                            <h:selectOneRadio id="rSelect" value="#{controllerBean.r}" required="true">
                                 <f:selectItem itemValue="1" itemLabel="1"/>
                                 <f:selectItem itemValue="1.5" itemLabel="1.5"/>
                                 <f:selectItem itemValue="2" itemLabel="2"/>
@@ -105,7 +111,7 @@
                     </h:panelGrid>
 
 
-                    <h:commandButton id="submit" value="Проверить" action="#{dotCheckerBean.checkPointAndSaveAtDB()}"
+                    <h:commandButton id="submit" value="Проверить" action="#{controllerBean.completeRequest()}"
                                      onclick="return validateAndSubmitForm();">
                         <f:ajax execute="@form" render="result-form plate-with-dots"/>
                     </h:commandButton>
@@ -127,7 +133,7 @@
                             <th>Now</th>
                             <th>Result</th>
                         </tr>
-                        <ui:repeat value="#{formBean.getResultList()}" var="result">
+                        <ui:repeat value="#{controllerBean.getResultList()}" var="result">
                             <tr>
                                 <td><h:outputText value="#{result.x}"/></td>
                                 <td><h:outputText value="#{result.y}"/></td>

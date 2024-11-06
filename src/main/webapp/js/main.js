@@ -143,15 +143,21 @@ document.addEventListener("DOMContentLoaded", function () {
     function updateGraph(r) {
         const scaleFactor = r / 5;
 
-        document.getElementById("rect").setAttribute("width", 49 * scaleFactor);
+
+
+        document.getElementById("rect").setAttribute("width", 99 * scaleFactor);
         document.getElementById("rect").setAttribute("height", 99 * scaleFactor);
-        document.getElementById("rect").setAttribute("x", 250 - 49 * scaleFactor);
+        document.getElementById("rect").setAttribute("x", 250 - 99 * scaleFactor);
         document.getElementById("rect").setAttribute("y", 250 + 1);
 
+
+        // Update the arc path (same as before)
         document.getElementById("arc").setAttribute("d", `M ${250 + 100 * scaleFactor} 251 A ${75 * scaleFactor} ${100 * scaleFactor} 400 0 1 251 ${250 + 100 * scaleFactor} L 251 251 Z`);
 
-        document.getElementById("triangle").setAttribute("points", `251,249 251,${250 - 50 * scaleFactor} ${250 + 100 * scaleFactor},249`);
+        // Update the triangle points (same as before)
+        document.getElementById("triangle").setAttribute("points", `251,249 251,${250 - 50 * scaleFactor} ${250 + 50 * scaleFactor},249`);
 
+        // Update other markers and labels (same as before)
         document.getElementById("mark-neg-rx").setAttribute("x1", 250 - 100 * scaleFactor);
         document.getElementById("mark-neg-rx").setAttribute("x2", 250 - 100 * scaleFactor);
 
@@ -170,6 +176,7 @@ document.addEventListener("DOMContentLoaded", function () {
         document.getElementById("label-neg-ry").setAttribute("y", 250 + 110 * scaleFactor);
         document.getElementById("label-ry").setAttribute("y", 250 - 95 * scaleFactor);
     }
+
 
 
     function drawPoints() {
