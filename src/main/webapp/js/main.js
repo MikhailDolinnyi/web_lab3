@@ -28,7 +28,7 @@ document.addEventListener("DOMContentLoaded", function () {
             }
 
             const y = Number(value);
-            if (y < -4 || y > 4) {
+            if (y < -5 || y > 3) {
                 throw new InvalidValueException("Число Y не входит в диапазон");
             }
 
@@ -43,7 +43,7 @@ document.addEventListener("DOMContentLoaded", function () {
             }
 
             const x = Number(value);
-            if (x < -3 || x > 3) {
+            if (x < -2 || x > 2) {
                 throw new InvalidValueException("Число X не входит в диапазон");
             }
             return true;
@@ -69,6 +69,12 @@ document.addEventListener("DOMContentLoaded", function () {
         rValidator.validate(values.r);
     }
 
+    function roundToNearestValue(value, valuesArray) {
+        return valuesArray.reduce((prev, curr) =>
+            Math.abs(curr - value) < Math.abs(prev - value) ? curr : prev
+        );
+    }
+
     function handleClick(event) {
         const svg = document.getElementById("plate");
         const point = svg.createSVGPoint();
@@ -76,16 +82,18 @@ document.addEventListener("DOMContentLoaded", function () {
         point.y = event.clientY;
         const coords = point.matrixTransform(svg.getScreenCTM().inverse());
 
-        const r = document.querySelector('input[name="data-form\:rSelect"]:checked')?.value;
-        const x = (coords.x - 250) / 20;
-        let y = (250 - coords.y) / 20;
+        const r = document.querySelector('input[name="data-form:rSelect"]:checked')?.value;
+        let x =(coords.x - 250) / 33;
+        let y = (250 - coords.y) / 33;
+
 
         try {
-            validateFormInput({x: x.toFixed(2), y: y.toFixed(2), r: r});
+            validateFormInput({x: x, y: y.toFixed(2), r: r});
+            x = roundToNearestValue(x,[-2, -1.5, -1, -0.5, 0, 0.5, 1, 1.5, 2]);
 
-            // Устанавливаем значения в форме
-            document.querySelector('input[name="data-form:x"]').value = x.toFixed(2);
-            document.querySelector('input[name="data-form:y"]').value = y.toFixed(2);
+
+            document.querySelector('select[id$=":x"]').value = x;
+            document.querySelector('input[id$=":y"]').value = y.toFixed(2);
             document.querySelector('input[name="data-form:rSelect"][value="' + r + '"]').checked = true;
 
             // Отправляем форму через стандартное JSF-событие
@@ -141,14 +149,14 @@ document.addEventListener("DOMContentLoaded", function () {
     });
 
     function updateGraph(r) {
-        const scaleFactor = r / 5;
+        const scaleFactor = r / 3;
 
 
 
         document.getElementById("rect").setAttribute("width", 99 * scaleFactor);
-        document.getElementById("rect").setAttribute("height", 99 * scaleFactor);
-        document.getElementById("rect").setAttribute("x", 250 - 99 * scaleFactor);
-        document.getElementById("rect").setAttribute("y", 250 + 1);
+        document.getElementById("rect").setAttribute("height", 100 * scaleFactor);
+        document.getElementById("rect").setAttribute("x", 250 - 100 * scaleFactor);
+        document.getElementById("rect").setAttribute("y", 251);
 
 
         // Update the arc path (same as before)
@@ -174,7 +182,7 @@ document.addEventListener("DOMContentLoaded", function () {
         document.getElementById("label-rx").setAttribute("x", 250 + 103 * scaleFactor);
 
         document.getElementById("label-neg-ry").setAttribute("y", 250 + 110 * scaleFactor);
-        document.getElementById("label-ry").setAttribute("y", 250 - 95 * scaleFactor);
+        document.getElementById("label-ry").setAttribute("y", 250 - 96 * scaleFactor);
     }
 
 
@@ -195,8 +203,8 @@ document.addEventListener("DOMContentLoaded", function () {
             const result = point.getAttribute("data-result") === "true";
 
             // Преобразуем координаты для SVG-системы (центр 250,250 и масштаб)
-            const svgX = 250 + x * 20;
-            const svgY = 250 - y * 20;
+            const svgX = 250 + x * 33;
+            const svgY = 250 - y * 33;
 
             // Создаем круг для точки
             const circle = document.createElementNS("http://www.w3.org/2000/svg", "circle");
